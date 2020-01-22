@@ -60,16 +60,16 @@ void SubaddressAccountImpl::refresh()
   clearRows();
   for (uint32_t i = 0; i < m_wallet->m_wallet->get_num_subaddress_accounts(); ++i)
   {
-    double xmc_balance = cryptonote::xmc_int_to_double(m_wallet->m_wallet->balance(i));
-    double xmc_unlocked_balance = cryptonote::xmc_int_to_double(m_wallet->m_wallet->unlocked_balance(i));
-    std::cout << "####******** subAddress index:" << i << ", balance:" << xmc_balance << ", unlocked balance:" << xmc_unlocked_balance << std::endl;
+    double rub_balance = cryptonote::rub_int_to_double(m_wallet->m_wallet->balance(i));
+    double rub_unlocked_balance = cryptonote::rub_int_to_double(m_wallet->m_wallet->unlocked_balance(i));
+    std::cout << "####******** subAddress index:" << i << ", balance:" << rub_balance << ", unlocked balance:" << rub_unlocked_balance << std::endl;
 
     m_rows.push_back(new SubaddressAccountRow(
       i,
       m_wallet->m_wallet->get_subaddress_as_str({i,0}),
       m_wallet->m_wallet->get_subaddress_label({i,0}),
-      cryptonote::print_money(xmc_balance),
-      cryptonote::print_money(xmc_unlocked_balance)
+      cryptonote::print_money(rub_balance),
+      cryptonote::print_money(rub_unlocked_balance)
     ));
 
     /*

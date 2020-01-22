@@ -1,5 +1,5 @@
 ## UBUNTU BUILD NOTES
-Some notes on how to build XMC in Ubuntu.
+Some notes on how to build RUB in Ubuntu.
 
 ### Dependencies
 ```
@@ -17,7 +17,7 @@ sudo ./b2 install
 
 ### To Build
 ```
-git clone https://github.com/monero-classic/monero.git
+git clone https://github.com/monero-rub/monero.git
 cd monero
 git submodule update --init --force external/miniupnp
 git submodule update --init --force external/unbound
@@ -30,27 +30,27 @@ make
 
 ### Usage
 
-**moneroclassicd** The node server for linking other nodes to synchronize block data 
+**monerorubd** The node server for linking other nodes to synchronize block data 
 
 Produce help message
 ```
-./moneroclassicd --help
+./monerorubd --help
 ```
 
 e.g Run as daemon 
 ```
-./moneroclassicd --add-exclusive-node=193.112.64.213:18080 --detach
+./monerorubd --add-exclusive-node=193.112.64.213:18080 --detach
 ```
 
-**moneroclassic-wallet-cli** The command line wallet
+**monerorub-wallet-cli** The command line wallet
 
 Produce help message
 ```
-./moneroclassic-wallet-cli --help
+./monerorub-wallet-cli --help
 ```
 
 e.g Generate new wallet
 ```
-./moneroclassic-wallet-cli --generate-new-wallet=your_wallet_name
+./monerorub-wallet-cli --generate-new-wallet=your_wallet_name
 ```
 

@@ -3281,9 +3281,9 @@ void wallet2::refresh(bool trusted_daemon, uint64_t start_height, uint64_t & blo
 
   m_first_refresh_done = true;
 
-  double xmc_balance = cryptonote::xmc_int_to_double(balance_all());
-  double xmc_unlocked_balance = cryptonote::xmc_int_to_double(unlocked_balance_all());
-  LOG_PRINT_L1("Refresh done, blocks received: " << blocks_fetched << ", balance (all accounts): " << print_money(xmc_balance) << ", unlocked: " << print_money(xmc_unlocked_balance));
+  double rub_balance = cryptonote::rub_int_to_double(balance_all());
+  double rub_unlocked_balance = cryptonote::rub_int_to_double(unlocked_balance_all());
+  LOG_PRINT_L1("Refresh done, blocks received: " << blocks_fetched << ", balance (all accounts): " << print_money(rub_balance) << ", unlocked: " << print_money(rub_unlocked_balance));
   //LOG_PRINT_L1("Refresh done, blocks received: " << blocks_fetched << ", balance (all accounts): " << print_money(balance_all()) << ", unlocked: " << print_money(unlocked_balance_all()));
 }
 //----------------------------------------------------------------------------------------------------
@@ -5569,10 +5569,10 @@ void wallet2::store_to(const std::string &path, const epee::wipeable_string &pas
 }
 //----------------------------------------------------------------------------------------------------
 // uint64_t wallet2::balance(uint32_t index_major) const
-xmc_int wallet2::balance(uint32_t index_major) const
+rub_int wallet2::balance(uint32_t index_major) const
 {
 //  uint64_t amount = 0;
-  xmc_int amount = 0;
+  rub_int amount = 0;
   if(m_light_wallet)
     return m_light_wallet_unlocked_balance;
   for (const auto& i : balance_per_subaddress(index_major))
@@ -5581,10 +5581,10 @@ xmc_int wallet2::balance(uint32_t index_major) const
 }
 //----------------------------------------------------------------------------------------------------
 // uint64_t wallet2::unlocked_balance(uint32_t index_major, uint64_t *blocks_to_unlock) const
-xmc_int wallet2::unlocked_balance(uint32_t index_major, uint64_t *blocks_to_unlock) const
+rub_int wallet2::unlocked_balance(uint32_t index_major, uint64_t *blocks_to_unlock) const
 {
 //  uint64_t amount = 0;
-  xmc_int amount = 0;
+  rub_int amount = 0;
   if (blocks_to_unlock)
     *blocks_to_unlock = 0;
   if(m_light_wallet)
@@ -5599,10 +5599,10 @@ xmc_int wallet2::unlocked_balance(uint32_t index_major, uint64_t *blocks_to_unlo
 }
 //----------------------------------------------------------------------------------------------------
 // std::map<uint32_t, uint64_t> wallet2::balance_per_subaddress(uint32_t index_major) const
-std::map<uint32_t, xmc_int> wallet2::balance_per_subaddress(uint32_t index_major) const
+std::map<uint32_t, rub_int> wallet2::balance_per_subaddress(uint32_t index_major) const
 {
 //  std::map<uint32_t, uint64_t> amount_per_subaddr;
-  std::map<uint32_t, xmc_int> amount_per_subaddr;
+  std::map<uint32_t, rub_int> amount_per_subaddr;
   for (const auto& td: m_transfers)
   {
     if (td.m_subaddr_index.major == index_major && !td.m_spent && !td.m_frozen)
@@ -5630,10 +5630,10 @@ std::map<uint32_t, xmc_int> wallet2::balance_per_subaddress(uint32_t index_major
 }
 //----------------------------------------------------------------------------------------------------
 // std::map<uint32_t, std::pair<uint64_t, uint64_t>> wallet2::unlocked_balance_per_subaddress(uint32_t index_major) const
-std::map<uint32_t, std::pair<xmc_int, uint64_t>> wallet2::unlocked_balance_per_subaddress(uint32_t index_major) const
+std::map<uint32_t, std::pair<rub_int, uint64_t>> wallet2::unlocked_balance_per_subaddress(uint32_t index_major) const
 {
 //  std::map<uint32_t, std::pair<uint64_t, uint64_t>> amount_per_subaddr;
-  std::map<uint32_t, std::pair<xmc_int, uint64_t>> amount_per_subaddr;
+  std::map<uint32_t, std::pair<rub_int, uint64_t>> amount_per_subaddr;
   const uint64_t blockchain_height = get_blockchain_current_height();
   for(const transfer_details& td: m_transfers)
   {
@@ -5667,20 +5667,20 @@ std::map<uint32_t, std::pair<xmc_int, uint64_t>> wallet2::unlocked_balance_per_s
 }
 //----------------------------------------------------------------------------------------------------
 // uint64_t wallet2::balance_all() const
-xmc_int wallet2::balance_all() const
+rub_int wallet2::balance_all() const
 {
 //  uint64_t r = 0;
-  xmc_int r = 0;
+  rub_int r = 0;
   for (uint32_t index_major = 0; index_major < get_num_subaddress_accounts(); ++index_major)
     r += balance(index_major);
   return r;
 }
 //----------------------------------------------------------------------------------------------------
 // uint64_t wallet2::unlocked_balance_all(uint64_t *blocks_to_unlock) const
-xmc_int wallet2::unlocked_balance_all(uint64_t *blocks_to_unlock) const
+rub_int wallet2::unlocked_balance_all(uint64_t *blocks_to_unlock) const
 {
 //  uint64_t r = 0;
-  xmc_int r = 0;
+  rub_int r = 0;
   if (blocks_to_unlock)
     *blocks_to_unlock = 0;
   for (uint32_t index_major = 0; index_major < get_num_subaddress_accounts(); ++index_major)
@@ -6161,8 +6161,8 @@ void wallet2::commit_tx(pending_tx& ptx)
     m_transfers[idx].m_multisig_k.clear();
 
   //fee includes dust if dust policy specified it.
-  double xmc_balance = cryptonote::xmc_int_to_double(balance(ptx.construction_data.subaddr_account));
-  double xmc_unlocked_balance = cryptonote::xmc_int_to_double(unlocked_balance(ptx.construction_data.subaddr_account));
+  double rub_balance = cryptonote::rub_int_to_double(balance(ptx.construction_data.subaddr_account));
+  double rub_unlocked_balance = cryptonote::rub_int_to_double(unlocked_balance(ptx.construction_data.subaddr_account));
   /*
   LOG_PRINT_L1("Transaction successfully sent. <" << txid << ">" << ENDL
             << "Commission: " << print_money(ptx.fee) << " (dust sent to dust addr: " << print_money((ptx.dust_added_to_fee ? 0 : ptx.dust)) << ")" << ENDL
@@ -6172,8 +6172,8 @@ void wallet2::commit_tx(pending_tx& ptx)
   */
   LOG_PRINT_L1("Transaction successfully sent. <" << txid << ">" << ENDL
             << "Commission: " << print_money(ptx.fee) << " (dust sent to dust addr: " << print_money((ptx.dust_added_to_fee ? 0 : ptx.dust)) << ")" << ENDL
-            << "Balance: " << print_money(xmc_balance) << ENDL
-            << "Unlocked: " << print_money(xmc_unlocked_balance) << ENDL
+            << "Balance: " << print_money(rub_balance) << ENDL
+            << "Unlocked: " << print_money(rub_unlocked_balance) << ENDL
             << "Please, wait for confirmation for your balance to be unlocked.");
 }
 
@@ -9256,8 +9256,8 @@ std::vector<wallet2::pending_tx> wallet2::create_transactions_2(std::vector<cryp
 
 //  std::map<uint32_t, std::pair<uint64_t, uint64_t>> unlocked_balance_per_subaddr = unlocked_balance_per_subaddress(subaddr_account);
 //  std::map<uint32_t, uint64_t> balance_per_subaddr = balance_per_subaddress(subaddr_account);
-  std::map<uint32_t, std::pair<xmc_int, uint64_t>> unlocked_balance_per_subaddr = unlocked_balance_per_subaddress(subaddr_account);
-  std::map<uint32_t, xmc_int> balance_per_subaddr = balance_per_subaddress(subaddr_account);
+  std::map<uint32_t, std::pair<rub_int, uint64_t>> unlocked_balance_per_subaddr = unlocked_balance_per_subaddress(subaddr_account);
+  std::map<uint32_t, rub_int> balance_per_subaddr = balance_per_subaddress(subaddr_account);
 
   if (subaddr_indices.empty()) // "index=<N1>[,<N2>,...]" wasn't specified -> use all the indices with non-zero unlocked balance
   {
@@ -9271,8 +9271,8 @@ std::vector<wallet2::pending_tx> wallet2::create_transactions_2(std::vector<cryp
   const uint64_t min_fee = (fee_multiplier * base_fee * estimate_tx_size(use_rct, 1, fake_outs_count, 2, extra.size(), bulletproof));
 //  uint64_t balance_subtotal = 0;
 //  uint64_t unlocked_balance_subtotal = 0;
-  xmc_int balance_subtotal = 0;
-  xmc_int unlocked_balance_subtotal = 0;
+  rub_int balance_subtotal = 0;
+  rub_int unlocked_balance_subtotal = 0;
   for (uint32_t index_minor : subaddr_indices)
   {
     balance_subtotal += balance_per_subaddr[index_minor];

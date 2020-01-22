@@ -39,7 +39,7 @@
 #include <iostream>
 #include <stdexcept>
 #include <boost/multiprecision/cpp_int.hpp>
-typedef boost::multiprecision::cpp_int xmc_int;
+typedef boost::multiprecision::cpp_int rub_int;
 
 //  Public interface for libwallet library
 namespace Monero {
@@ -596,16 +596,16 @@ struct Wallet
     virtual ConnectionStatus connected() const = 0;
     virtual void setTrustedDaemon(bool arg) = 0;
     virtual bool trustedDaemon() const = 0;
-    virtual xmc_int balance(uint32_t accountIndex = 0) const = 0;
-    xmc_int balanceAll() const {
-        xmc_int result = 0;
+    virtual rub_int balance(uint32_t accountIndex = 0) const = 0;
+    rub_int balanceAll() const {
+        rub_int result = 0;
         for (uint32_t i = 0; i < numSubaddressAccounts(); ++i)
             result += balance(i);
         return result;
     }
-    virtual xmc_int unlockedBalance(uint32_t accountIndex = 0) const = 0;
-    xmc_int unlockedBalanceAll() const {
-        xmc_int result = 0;
+    virtual rub_int unlockedBalance(uint32_t accountIndex = 0) const = 0;
+    rub_int unlockedBalanceAll() const {
+        rub_int result = 0;
         for (uint32_t i = 0; i < numSubaddressAccounts(); ++i)
             result += unlockedBalance(i);
         return result;

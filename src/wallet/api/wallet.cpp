@@ -1022,12 +1022,12 @@ void WalletImpl::setSubaddressLookahead(uint32_t major, uint32_t minor)
     m_wallet->set_subaddress_lookahead(major, minor);
 }
 
-xmc_int WalletImpl::balance(uint32_t accountIndex) const
+rub_int WalletImpl::balance(uint32_t accountIndex) const
 {
     return m_wallet->balance(accountIndex);
 }
 
-xmc_int WalletImpl::unlockedBalance(uint32_t accountIndex) const
+rub_int WalletImpl::unlockedBalance(uint32_t accountIndex) const
 {
     return m_wallet->unlocked_balance(accountIndex);
 }
@@ -1548,7 +1548,7 @@ PendingTransaction *WalletImpl::createTransaction(const string &dst_addr, const 
         } catch (const tools::error::not_enough_unlocked_money& e) {
             std::ostringstream writer;
 
-            double available = cryptonote::xmc_int_to_double(e.available());
+            double available = cryptonote::rub_int_to_double(e.available());
             writer << boost::format(tr("not enough money to transfer, available only: %s, sent amount: %s")) %
                       print_money(available) %
                       print_money(e.tx_amount());
@@ -1556,7 +1556,7 @@ PendingTransaction *WalletImpl::createTransaction(const string &dst_addr, const 
         } catch (const tools::error::not_enough_money& e) {
             std::ostringstream writer;
 
-            double available = cryptonote::xmc_int_to_double(e.available());
+            double available = cryptonote::rub_int_to_double(e.available());
             writer << boost::format(tr("not enough money to transfer, overall balance only: %s, sent amount: %s, min fee: %s")) %
                       print_money(available) %
                       print_money(e.tx_amount()) %
@@ -1565,7 +1565,7 @@ PendingTransaction *WalletImpl::createTransaction(const string &dst_addr, const 
         } catch (const tools::error::tx_not_possible& e) {
             std::ostringstream writer;
 
-	    double available = cryptonote::xmc_int_to_double(e.available());
+	    double available = cryptonote::rub_int_to_double(e.available());
             writer << boost::format(tr("not enough money to transfer, available only %s, transaction amount %s = %s + %s (fee)")) %
                       print_money(available) %
                       print_money(e.tx_amount() + e.fee())  %
@@ -1635,7 +1635,7 @@ PendingTransaction *WalletImpl::createSweepUnmixableTransaction()
             setStatusError("");
             std::ostringstream writer;
 
-	    double available = cryptonote::xmc_int_to_double(e.available());
+	    double available = cryptonote::rub_int_to_double(e.available());
             writer << boost::format(tr("not enough money to transfer, available only %s, sent amount %s")) %
                       print_money(available) %
                       print_money(e.tx_amount());
@@ -1644,7 +1644,7 @@ PendingTransaction *WalletImpl::createSweepUnmixableTransaction()
             setStatusError("");
             std::ostringstream writer;
 
-	    double available = cryptonote::xmc_int_to_double(e.available());
+	    double available = cryptonote::rub_int_to_double(e.available());
             writer << boost::format(tr("not enough money to transfer, overall balance only %s, sent amount %s, min fee %s")) %
                       print_money(available) %
                       print_money(e.tx_amount()) %
@@ -1654,7 +1654,7 @@ PendingTransaction *WalletImpl::createSweepUnmixableTransaction()
             setStatusError("");
             std::ostringstream writer;
 
-	    double available = cryptonote::xmc_int_to_double(e.available());
+	    double available = cryptonote::rub_int_to_double(e.available());
             writer << boost::format(tr("not enough money to transfer, available only %s, transaction amount %s = %s + %s (fee)")) %
                       print_money(available) %
                       print_money(e.tx_amount() + e.fee())  %

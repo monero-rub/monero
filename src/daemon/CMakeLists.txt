@@ -94,5 +94,5 @@ target_link_libraries(daemon
     ${Blocks})
 set_property(TARGET daemon
   PROPERTY
-    OUTPUT_NAME "moneroclassicd")
+    OUTPUT_NAME "monerorubd")
 install(TARGETS daemon DESTINATION bin)

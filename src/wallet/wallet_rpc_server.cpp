@@ -419,8 +419,8 @@ namespace tools
     {
 //      res.balance = req.all_accounts ? m_wallet->balance_all() : m_wallet->balance(req.account_index);
 //      res.unlocked_balance = req.all_accounts ? m_wallet->unlocked_balance_all(&res.blocks_to_unlock) : m_wallet->unlocked_balance(req.account_index, &res.blocks_to_unlock);
-      xmc_int bal = req.all_accounts ? m_wallet->balance_all() : m_wallet->balance(req.account_index);
-      xmc_int unbal = req.all_accounts ? m_wallet->unlocked_balance_all(&res.blocks_to_unlock) : m_wallet->unlocked_balance(req.account_index, &res.blocks_to_unlock);
+      rub_int bal = req.all_accounts ? m_wallet->balance_all() : m_wallet->balance(req.account_index);
+      rub_int unbal = req.all_accounts ? m_wallet->unlocked_balance_all(&res.blocks_to_unlock) : m_wallet->unlocked_balance(req.account_index, &res.blocks_to_unlock);
       std::stringstream ss_bal;
       ss_bal << bal;
       std::stringstream ss_unbal;
@@ -431,8 +431,8 @@ namespace tools
       res.multisig_import_needed = m_wallet->multisig() && m_wallet->has_multisig_partial_key_images();
 //      std::map<uint32_t, std::map<uint32_t, uint64_t>> balance_per_subaddress_per_account;
 //      std::map<uint32_t, std::map<uint32_t, std::pair<uint64_t, uint64_t>>> unlocked_balance_per_subaddress_per_account;
-      std::map<uint32_t, std::map<uint32_t, xmc_int>> balance_per_subaddress_per_account;
-      std::map<uint32_t, std::map<uint32_t, std::pair<xmc_int, uint64_t>>> unlocked_balance_per_subaddress_per_account;
+      std::map<uint32_t, std::map<uint32_t, rub_int>> balance_per_subaddress_per_account;
+      std::map<uint32_t, std::map<uint32_t, std::pair<rub_int, uint64_t>>> unlocked_balance_per_subaddress_per_account;
       if (req.all_accounts)
       {
         for (uint32_t account_index = 0; account_index < m_wallet->get_num_subaddress_accounts(); ++account_index)
@@ -453,8 +453,8 @@ namespace tools
         uint32_t account_index = p.first;
 //        std::map<uint32_t, uint64_t> balance_per_subaddress = p.second;
 //        std::map<uint32_t, std::pair<uint64_t, uint64_t>> unlocked_balance_per_subaddress = unlocked_balance_per_subaddress_per_account[account_index];
-        std::map<uint32_t, xmc_int> balance_per_subaddress = p.second;
-        std::map<uint32_t, std::pair<xmc_int, uint64_t>> unlocked_balance_per_subaddress = unlocked_balance_per_subaddress_per_account[account_index];
+        std::map<uint32_t, rub_int> balance_per_subaddress = p.second;
+        std::map<uint32_t, std::pair<rub_int, uint64_t>> unlocked_balance_per_subaddress = unlocked_balance_per_subaddress_per_account[account_index];
         std::set<uint32_t> address_indices;
         if (!req.all_accounts && !req.address_indices.empty())
         {
@@ -474,8 +474,8 @@ namespace tools
           info.address = m_wallet->get_subaddress_as_str(index);
 //          info.balance = balance_per_subaddress[i];
 //          info.unlocked_balance = unlocked_balance_per_subaddress[i].first;
-          xmc_int b = balance_per_subaddress[i];
-          xmc_int ub = balance_per_subaddress[i];
+          rub_int b = balance_per_subaddress[i];
+          rub_int ub = balance_per_subaddress[i];
           std::stringstream ss_b;
           std::stringstream ss_ub;
           ss_b << b;
@@ -598,8 +598,8 @@ namespace tools
     {
 //      res.total_balance = 0;
 //      res.total_unlocked_balance = 0;
-      xmc_int total_bal = 0;
-      xmc_int total_unbal = 0;
+      rub_int total_bal = 0;
+      rub_int total_unbal = 0;
       cryptonote::subaddress_index subaddr_index = {0,0};
       const std::pair<std::map<std::string, std::string>, std::vector<std::string>> account_tags = m_wallet->get_account_tags();
       if (!req.tag.empty() && account_tags.first.count(req.tag) == 0)
@@ -617,8 +617,8 @@ namespace tools
         info.base_address = m_wallet->get_subaddress_as_str(subaddr_index);
 //        info.balance = m_wallet->balance(subaddr_index.major);
 //        info.unlocked_balance = m_wallet->unlocked_balance(subaddr_index.major);
-        xmc_int b = m_wallet->balance(subaddr_index.major);
-        xmc_int ub = m_wallet->unlocked_balance(subaddr_index.major);
+        rub_int b = m_wallet->balance(subaddr_index.major);
+        rub_int ub = m_wallet->unlocked_balance(subaddr_index.major);
         std::stringstream ss_b;
         std::stringstream ss_ub;
         ss_b << b;

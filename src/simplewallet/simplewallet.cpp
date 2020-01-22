@@ -1,4 +1,4 @@
-// Copyright (c) 2014-2019, The Moneroclassic Project
+// Copyright (c) 2014-2019, The Monerorub Project
 // 
 // All rights reserved.
 // 
@@ -444,7 +444,7 @@ namespace
     std::stringstream prompt;
     prompt << sw::tr("For URL: ") << url
            << ", " << dnssec_str << std::endl
-           << sw::tr(" Moneroclassic Address = ") << addresses[0]
+           << sw::tr(" Monerorub Address = ") << addresses[0]
            << std::endl
            << sw::tr("Is this OK?")
     ;
@@ -520,7 +520,7 @@ namespace
     }
     catch (const tools::error::not_enough_unlocked_money& e)
     {
-      double available = cryptonote::xmc_int_to_double(e.available());
+      double available = cryptonote::rub_int_to_double(e.available());
       LOG_PRINT_L0(boost::format("not enough money to transfer, available only %s, sent amount %s") %
         print_money(available) %
         print_money(e.tx_amount()));
@@ -535,7 +535,7 @@ namespace
     }
     catch (const tools::error::not_enough_money& e)
     {
-      double available = cryptonote::xmc_int_to_double(e.available());
+      double available = cryptonote::rub_int_to_double(e.available());
       LOG_PRINT_L0(boost::format("not enough money to transfer, available only %s, sent amount %s") %
 //        print_money(e.available()) %
 	print_money(available) %
@@ -545,7 +545,7 @@ namespace
     }
     catch (const tools::error::tx_not_possible& e)
     {
-      double available = cryptonote::xmc_int_to_double(e.available());
+      double available = cryptonote::rub_int_to_double(e.available());
       LOG_PRINT_L0(boost::format("not enough money to transfer, available only %s, transaction amount %s = %s + %s (fee)") %
 //        print_money(e.available()) %
         print_money(available) %
@@ -2153,25 +2153,25 @@ bool simple_wallet::net_stats(const std::vector<std::string> &args)
 
 bool simple_wallet::welcome(const std::vector<std::string> &args)
 {
-  message_writer() << tr("Welcome to Moneroclassic, the private cryptocurrency.");
+  message_writer() << tr("Welcome to Monerorub, the private cryptocurrency.");
   message_writer() << "";
-  message_writer() << tr("Moneroclassic, like Bitcoin, is a cryptocurrency. That is, it is digital money.");
-  message_writer() << tr("Unlike Bitcoin, your Moneroclassic transactions and balance stay private, and not visible to the world by default.");
+  message_writer() << tr("Monerorub, like Bitcoin, is a cryptocurrency. That is, it is digital money.");
+  message_writer() << tr("Unlike Bitcoin, your Monerorub transactions and balance stay private, and not visible to the world by default.");
   message_writer() << tr("However, you have the option of making those available to select parties, if you choose to.");
   message_writer() << "";
-  message_writer() << tr("Moneroclassic protects your privacy on the blockchain, and while Monero strives to improve all the time,");
-  message_writer() << tr("no privacy technology can be 100% perfect, Moneroclassic included.");
-  message_writer() << tr("Moneroclassic cannot protect you from malware, and it may not be as effective as we hope against powerful adversaries.");
-  message_writer() << tr("Flaws in Moneroclassic may be discovered in the future, and attacks may be developed to peek under some");
-  message_writer() << tr("of the layers of privacy Moneroclassic provides. Be safe and practice defense in depth.");
+  message_writer() << tr("Monerorub protects your privacy on the blockchain, and while Monero strives to improve all the time,");
+  message_writer() << tr("no privacy technology can be 100% perfect, Monerorub included.");
+  message_writer() << tr("Monerorub cannot protect you from malware, and it may not be as effective as we hope against powerful adversaries.");
+  message_writer() << tr("Flaws in Monerorub may be discovered in the future, and attacks may be developed to peek under some");
+  message_writer() << tr("of the layers of privacy Monerorub provides. Be safe and practice defense in depth.");
   message_writer() << "";
-  message_writer() << tr("Welcome to Moneroclassic and financial privacy. For more information, see https://getmonero.org/");
+  message_writer() << tr("Welcome to Monerorub and financial privacy. For more information, see https://getmonero.org/");
   return true;
 }
 
 bool simple_wallet::version(const std::vector<std::string> &args)
 {
-  message_writer() << "Moneroclassic (v" << MONERO_VERSION_FULL << ")";
+  message_writer() << "Monerorub (v" << MONERO_VERSION_FULL << ")";
   return true;
 }
 
@@ -2895,12 +2895,12 @@ simple_wallet::simple_wallet()
                                   "auto-low-priority <1|0>\n "
                                   "  Whether to automatically use the low priority fee level when it's safe to do so.\n "
                                   "segregate-pre-fork-outputs <1|0>\n "
-                                  "  Set this if you intend to spend outputs on both Moneroclassic AND a key reusing fork.\n "
+                                  "  Set this if you intend to spend outputs on both Monerorub AND a key reusing fork.\n "
                                   "key-reuse-mitigation2 <1|0>\n "
-                                  "  Set this if you are not sure whether you will spend on a key reusing Moneroclassic fork later.\n"
+                                  "  Set this if you are not sure whether you will spend on a key reusing Monerorub fork later.\n"
                                   "subaddress-lookahead <major>:<minor>\n "
                                   "  Set the lookahead sizes for the subaddress hash table.\n "
-                                  "  Set this if you are not sure whether you will spend on a key reusing Moneroclassic fork later.\n "
+                                  "  Set this if you are not sure whether you will spend on a key reusing Monerorub fork later.\n "
                                   "segregation-height <n>\n "
                                   "  Set to the height of a key reusing fork you want to use, 0 to use default."));
   m_cmd_binder.set_handler("encrypted_seed",
@@ -3091,7 +3091,7 @@ simple_wallet::simple_wallet()
   m_cmd_binder.set_handler("mms signer",
                            boost::bind(&simple_wallet::mms, this, _1),
                            tr(USAGE_MMS_SIGNER),
-                           tr("Set or modify authorized signer info (single-word label, transport address, Moneroclassic address), or list all signers"));
+                           tr("Set or modify authorized signer info (single-word label, transport address, Monerorub address), or list all signers"));
   m_cmd_binder.set_handler("mms list",
                            boost::bind(&simple_wallet::mms, this, _1),
                            tr(USAGE_MMS_LIST),
@@ -3204,7 +3204,7 @@ simple_wallet::simple_wallet()
   m_cmd_binder.set_handler("welcome",
                            boost::bind(&simple_wallet::welcome, this, _1),
                            tr(USAGE_WELCOME),
-                           tr("Prints basic info about Moneroclassic for first time users"));
+                           tr("Prints basic info about Monerorub for first time users"));
   m_cmd_binder.set_handler("version",
                            boost::bind(&simple_wallet::version, this, _1),
                            tr(USAGE_VERSION),
@@ -4101,7 +4101,7 @@ bool simple_wallet::init(const boost::program_options::variables_map& vm)
   check_background_mining(password);
 
   if (welcome)
-    message_writer(console_color_yellow, true) << tr("If you are new to Moneroclassic, type \"welcome\" for a brief overview.");
+    message_writer(console_color_yellow, true) << tr("If you are new to Monerorub, type \"welcome\" for a brief overview.");
 
   if (m_long_payment_id_support)
   {
@@ -4691,7 +4691,7 @@ void simple_wallet::start_background_mining()
       return;
     }
   }
-  success_msg_writer() << tr("Background mining enabled. Thank you for supporting the Moneroclassic network.");
+  success_msg_writer() << tr("Background mining enabled. Thank you for supporting the Monerorub network.");
 }
 //----------------------------------------------------------------------------------------------------
 void simple_wallet::stop_background_mining()
@@ -5201,7 +5201,7 @@ bool simple_wallet::show_balance_unlocked(bool detailed)
   success_msg_writer() << tr("Tag: ") << (tag.empty() ? std::string{tr("(No tag assigned)")} : tag);
   uint64_t blocks_to_unlock;
 //  uint64_t unlocked_balance = m_wallet->unlocked_balance(m_current_subaddress_account, &blocks_to_unlock);
-  xmc_int unlocked_balance = m_wallet->unlocked_balance(m_current_subaddress_account, &blocks_to_unlock);
+  rub_int unlocked_balance = m_wallet->unlocked_balance(m_current_subaddress_account, &blocks_to_unlock);
   std::string unlock_time_message;
   if (blocks_to_unlock > 0)
     unlock_time_message = (boost::format(" (%lu block(s) to unlock)") % blocks_to_unlock).str();
@@ -5210,8 +5210,8 @@ bool simple_wallet::show_balance_unlocked(bool detailed)
     << tr("unlocked balance: ") << print_money(unlocked_balance) << unlock_time_message << extra;
 //  std::map<uint32_t, uint64_t> balance_per_subaddress = m_wallet->balance_per_subaddress(m_current_subaddress_account);
 //  std::map<uint32_t, std::pair<uint64_t, uint64_t>> unlocked_balance_per_subaddress = m_wallet->unlocked_balance_per_subaddress(m_current_subaddress_account);
-  std::map<uint32_t, xmc_int> balance_per_subaddress = m_wallet->balance_per_subaddress(m_current_subaddress_account);
-  std::map<uint32_t, std::pair<xmc_int, uint64_t>> unlocked_balance_per_subaddress = m_wallet->unlocked_balance_per_subaddress(m_current_subaddress_account);
+  std::map<uint32_t, rub_int> balance_per_subaddress = m_wallet->balance_per_subaddress(m_current_subaddress_account);
+  std::map<uint32_t, std::pair<rub_int, uint64_t>> unlocked_balance_per_subaddress = m_wallet->unlocked_balance_per_subaddress(m_current_subaddress_account);
   if (!detailed || balance_per_subaddress.empty())
     return true;
   success_msg_writer() << tr("Balance per address:");
@@ -6846,7 +6846,7 @@ bool simple_wallet::donate(const std::vector<std::string> &args_)
   if (!payment_id_str.empty())
     local_args.push_back(payment_id_str);
   if (m_wallet->nettype() == cryptonote::MAINNET)
-    message_writer() << (boost::format(tr("Donating %s %s to The Moneroclassic Project (donate.getmonero.org or %s).")) % amount_str % cryptonote::get_unit(cryptonote::get_default_decimal_point()) % MONERO_DONATION_ADDR).str();
+    message_writer() << (boost::format(tr("Donating %s %s to The Monerorub Project (donate.getmonero.org or %s).")) % amount_str % cryptonote::get_unit(cryptonote::get_default_decimal_point()) % MONERO_DONATION_ADDR).str();
   else
     message_writer() << (boost::format(tr("Donating %s %s to %s.")) % amount_str % cryptonote::get_unit(cryptonote::get_default_decimal_point()) % address_str).str();
   transfer(local_args);
@@ -8490,7 +8490,7 @@ void simple_wallet::print_accounts(const std::string& tag)
   }
   success_msg_writer() << boost::format("  %15s %21s %21s %21s") % tr("Account") % tr("Balance") % tr("Unlocked balance") % tr("Label");
 //  uint64_t total_balance = 0, total_unlocked_balance = 0;
-  xmc_int total_balance = 0, total_unlocked_balance = 0;
+  rub_int total_balance = 0, total_unlocked_balance = 0;
   for (uint32_t account_index = 0; account_index < m_wallet->get_num_subaddress_accounts(); ++account_index)
   {
     if (account_tags.second[account_index] != tag)
@@ -9419,12 +9419,12 @@ int main(int argc, char* argv[])
   bool should_terminate = false;
   std::tie(vm, should_terminate) = wallet_args::main(
    argc, argv,
-   "moneroclassic-wallet-cli [--wallet-file=<filename>|--generate-new-wallet=<filename>] [<COMMAND>]",
-    sw::tr("This is the command line moneroclassic wallet. It needs to connect to a moneroclassic\ndaemon to work correctly.\nWARNING: Do not reuse your Moneroclassicclassic keys on another fork, UNLESS this fork has key reuse mitigations built in. Doing so will harm your privacy."),
+   "monerorub-wallet-cli [--wallet-file=<filename>|--generate-new-wallet=<filename>] [<COMMAND>]",
+    sw::tr("This is the command line monerorub wallet. It needs to connect to a monerorub\ndaemon to work correctly.\nWARNING: Do not reuse your Monerorubclassic keys on another fork, UNLESS this fork has key reuse mitigations built in. Doing so will harm your privacy."),
     desc_params,
     positional_options,
     [](const std::string &s, bool emphasis){ tools::scoped_message_writer(emphasis ? epee::console_color_white : epee::console_color_default, true) << s; },
-    "moneroclassic-wallet-cli.log"
+    "monerorub-wallet-cli.log"
   );
 
   if (!vm)
@@ -9603,7 +9603,7 @@ void simple_wallet::list_mms_messages(const std::vector<mms::message> &messages)
 void simple_wallet::list_signers(const std::vector<mms::authorized_signer> &signers)
 {
   message_writer() << boost::format("%2s %-20s %-s") % tr("#") % tr("Label") % tr("Transport Address");
-  message_writer() << boost::format("%2s %-20s %-s") % "" % tr("Auto-Config Token") % tr("Moneroclassic Address");
+  message_writer() << boost::format("%2s %-20s %-s") % "" % tr("Auto-Config Token") % tr("Monerorub Address");
   for (size_t i = 0; i < signers.size(); ++i)
   {
     const mms::authorized_signer &signer = signers[i];
@@ -9828,14 +9828,14 @@ void simple_wallet::mms_signer(const std::vector<std::string> &args)
     bool ok = cryptonote::get_account_address_from_str_or_url(info, m_wallet->nettype(), args[3], oa_prompter);
     if (!ok)
     {
-      fail_msg_writer() << tr("Invalid Moneroclassic address");
+      fail_msg_writer() << tr("Invalid Monerorub address");
       return;
     }
     monero_address = info.address;
     const std::vector<mms::message> &messages = ms.get_all_messages();
     if ((messages.size() > 0) || state.multisig)
     {
-      fail_msg_writer() << tr("Wallet state does not allow changing Moneroclassic addresses anymore");
+      fail_msg_writer() << tr("Wallet state does not allow changing Monerorub addresses anymore");
       return;
     }
   }

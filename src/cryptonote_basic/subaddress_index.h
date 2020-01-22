@@ -34,7 +34,7 @@
 #include <ostream>
 
 #include <boost/multiprecision/cpp_int.hpp>
-typedef boost::multiprecision::cpp_int xmc_int;
+typedef boost::multiprecision::cpp_int rub_int;
 
 namespace cryptonote
 {
